@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* Estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f8fafc; /* slate-50 */
+    color: #0f172a; /* slate-900 */
+    min-height: 100vh;
+}
+
+/* Minimalist Utilities */
+.card-panel {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.card-panel-hover {
+    transition: all 0.2s ease;
+}
+.card-panel-hover:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: #cbd5e1;
+}
+
+/* Print Styles */
+@media print {
+    body { 
+        background-color: white !important; 
+        color: black !important;
+    }
+    .no-print { display: none !important; }
+    .card-panel { 
+        border: none !important; 
+        box-shadow: none !important; 
+    }
+}
