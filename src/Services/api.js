@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000/api'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
 const getAuthHeaders = () => {
   const userInfo = localStorage.getItem('userInfo')
@@ -17,7 +17,9 @@ const fetchAPI = async (endpoint, options = {}) => {
   if (!response.ok) {
     if (response.status === 401) {
       localStorage.removeItem('userInfo')
-      window.location.href = '/login'
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
+        window.location.href = '/login'
+      }
       throw new Error('Sesión expirada. Por favor, inicia sesión de nuevo.')
     }
     

@@ -31,6 +31,27 @@ const InvoiceAppInner = () => {
     const { message } = AntApp.useApp()
     const navigate = useNavigate()
 
+    const [showConfigForm, setShowConfigForm] = useState(false)
+
+    return (
+        <>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<RegisterCompany />} />
+
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/*" element={<ProtectedApp />} />
+                </Route>
+            </Routes>
+        </>
+    )
+}
+
+const ProtectedApp = () => {
+    const { config } = useCompanyConfig()
+    const navigate = useNavigate()
+    const { message } = AntApp.useApp()
+
     const { data: invoices = [], isLoading: loading } = useInvoices()
     const { mutate: saveInvoice } = useSaveInvoice()
     const { mutate: deleteInvoice } = useDeleteInvoice()
@@ -74,14 +95,9 @@ const InvoiceAppInner = () => {
     }
 
     return (
-        <>
-            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<RegisterCompany />} />
-
-                <Route element={<ProtectedRoute />}>
-                    <Route path="/" element={<AppLayout overdueCount={overdueCount} />}>
-                        <Route index element={<InvoiceDashboard invoices={invoices} />} />
+        <Routes>
+            <Route element={<AppLayout overdueCount={overdueCount} />}>
+                <Route index element={<InvoiceDashboard invoices={invoices} />} />
                         <Route path="invoices" element={<InvoiceList invoices={invoices} loading={loading} />} />
                         
                         <Route path="invoices/new" element={
@@ -122,10 +138,8 @@ const InvoiceAppInner = () => {
                         <Route element={<ProtectedRoute requireSuperAdmin={true} />}>
                             <Route path="superadmin" element={<SuperAdminDashboard />} />
                         </Route>
-                    </Route>
-                </Route>
-            </Routes>
-        </>
+            </Route>
+        </Routes>
     )
 }
 
