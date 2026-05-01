@@ -54,7 +54,7 @@ export const NewInvoiceForm = ({ onSave, onCancel, config, initialData = null })
                 items: initialData.items,
                 taxRate: initialData.taxRate,
                 notes: initialData.notes,
-                currency: initialData.currency || 'MXN'
+                currency: initialData.currency || 'CRC'
             })
         } else {
             // El count será la longitud actual de las facturas
@@ -63,8 +63,8 @@ export const NewInvoiceForm = ({ onSave, onCancel, config, initialData = null })
                 invoiceNumber: generateInvoiceNumber(config.invoicePrefix, new Date().getFullYear(), currentCount),
                 date: dayjs(),
                 items: [{ description: '', quantity: 1, unitPrice: 0 }],
-                taxRate: config.taxRate,
-                currency: 'MXN'
+                taxRate: 13,
+                currency: 'CRC'
             })
         }
     }, [form, config, initialData, invoices.length])
@@ -184,10 +184,10 @@ export const NewInvoiceForm = ({ onSave, onCancel, config, initialData = null })
                     <Col xs={24} md={6}>
                         <Form.Item name="currency" label="Moneda" rules={[{ required: true }]}>
                             <Select>
+                                <Select.Option value="CRC">CRC - Colón Costarricense</Select.Option>
                                 <Select.Option value="MXN">MXN - Peso Mexicano</Select.Option>
                                 <Select.Option value="USD">USD - Dólar Estadounidense</Select.Option>
                                 <Select.Option value="EUR">EUR - Euro</Select.Option>
-                                <Select.Option value="CRC">CRC - Colón Costarricense</Select.Option>
                                 <Select.Option value="CLP">CLP - Peso Chileno</Select.Option>
                                 <Select.Option value="COP">COP - Peso Colombiano</Select.Option>
                                 <Select.Option value="ARS">ARS - Peso Argentino</Select.Option>
@@ -197,7 +197,7 @@ export const NewInvoiceForm = ({ onSave, onCancel, config, initialData = null })
                 </Row>
 
                 <Divider orientation="left">Información del Cliente</Divider>
-                
+
                 {savedClients.length > 0 && (
                     <Row style={{ marginBottom: 16 }}>
                         <Col span={24}>
